@@ -25,8 +25,8 @@ global_temp = df['global_moving'].tolist()[20:]
 # print(global_temp)
 # print(diff)
 
-plt.plot(year, wash_actual, color='#EAC6FF', linewidth=2, label='Washington - Measured')
-plt.plot(year, global_actual, color='#FFE1F7', linewidth=2, label='Global - Measured')
+plt.plot(year, wash_actual, color='#EAC6FF', linewidth=2, label='Washington - Measured Temperature')
+plt.plot(year, global_actual, color='#FFE1F7', linewidth=2, label='Global - Measured Temperature')
 plt.plot(year, wash_temp, linewidth=3, color='#512D6D', label='Washington - Moving Average')
 plt.plot(year, global_temp, linewidth=3, color='#F8485E', label='Global - Moving Average')
 
@@ -64,15 +64,27 @@ plt.show()
 
 
 
-plt.scatter(year[-33:], wash_temp[-33:], linewidth=1, color='#512D6D', label='Washington, DC', marker='d')
-plt.scatter(year[-33:], global_temp[-33:], linewidth=1, color='#F8485E', label='Global', marker='d')
-plt.annotate(str(wash_temp[-33:][0]) + '°C', xy=( year[-33:][0], wash_temp[-33:][0]), xytext=(1981, 11.8))
-plt.annotate(str(wash_temp[-33:][-1]) + '°C' , xy=( year[-33:][-1], wash_temp[-33:][-1]), xytext=(2012, 12.6))
+plt.scatter(year[-33:], wash_temp[-33:], linewidth=1, color='#512D6D', label='Washington, DC', marker='.')
+plt.scatter(year[-33:], global_temp[-33:], linewidth=1, color='#F8485E', label='Global', marker='.')
+
+# Add Marker to the points with values
+plt.scatter(year[-33:][0], wash_temp[-33:][0], linewidth=3, color='#512D6D', marker="v")
+plt.scatter(year[-33:][-1], wash_temp[-33:][-1], linewidth=3, color='#512D6D', marker="v")
+plt.scatter(year[-33:][0], global_temp[-33:][0], linewidth=3, color='#F8485E', marker="^")
+plt.scatter(year[-33:][-1], global_temp[-33:][-1], linewidth=3, color='#F8485E', marker="v")
+
+
+plt.annotate(str(wash_temp[-33:][0]) + '°C', xy=( year[-33:][0], wash_temp[-33:][0]), xytext=(1980, 11.7))
+plt.annotate(str(wash_temp[-33:][-1]) + '°C' , xy=( year[-33:][-1], wash_temp[-33:][-1]), xytext=(2011.5, 12.5))
+
+plt.annotate(str(global_temp[-33:][0]) + '°C', xy=( year[-33:][0], global_temp[-33:][0]), xytext=(1980, 9))
+plt.annotate(str(global_temp[-33:][-1]) + '°C' , xy=( year[-33:][-1], global_temp[-33:][-1]), xytext=(2011, 9 ))
 
 
 m, b = np.polyfit(year[-33:], wash_temp[-33:], 1)
 m1, b1 = np.polyfit(year[-33:], global_temp[-33:], 1)
-plt.text(1990, 12, f'Slope = {round(m, 3)}', color='red', fontsize=15)
+plt.text(1990, 12, f'm = {round(m, 4)}', color='#512D6D', fontsize=15)
+plt.text(1990, 9.2, f'm = {round(m1, 4)}', color='#F8485E', fontsize=15)
 
 line = []
 line1  = []
@@ -88,9 +100,8 @@ plt.plot(year[-33:], line1)
 
 plt.xlabel('year')
 plt.ylabel('Tempereature (°C)')
-plt.title('Temperature Rise (Local and Global) - 1980 to 2013')
+plt.title('Temperatures - 1980 to 2013- with regression lines')
 
-plt.fill_between(year[-33:], wash_temp[-33:], global_temp[-33:], alpha=0.1)
 plt.legend()
 plt.tight_layout()
 

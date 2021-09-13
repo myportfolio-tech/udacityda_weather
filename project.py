@@ -15,6 +15,3 @@ diff_plot.legend(['city temp', 'global temp','difference'])
 
 plt.savefig('temperatures.pdf')
 plt.show()
-
-
-
